@@ -1,44 +1,51 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const AddAvailability = ({ userId }) => {
-  // console.log(userId);
-
   const [date, setDate] = useState('');
-  const [timeSlots, setTimeSlots] = useState(['']); // Array to hold time slots
+  const [timeSlots, setTimeSlots] = useState([{ startTime: '', endTime: '' }]); // Array of objects to hold startTime and endTime
 
-  const handleTimeSlotChange = (index, value) => {
+  // Handle change for start and end times
+  const handleTimeSlotChange = (index, field, value) => {
     const newTimeSlots = [...timeSlots];
-    newTimeSlots[index] = value;
+    newTimeSlots[index][field] = value;
     setTimeSlots(newTimeSlots);
   };
 
+  // Add a new time slot (with startTime and endTime fields)
   const handleAddTimeSlot = () => {
-    setTimeSlots([...timeSlots, '']); // Add an empty time slot
+    setTimeSlots([...timeSlots, { startTime: '', endTime: '' }]);
   };
 
-  // here the provider adds his availability
+  // Submit the availability form
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(userId);
     console.log(date);
     console.log(timeSlots);
+    const token = Cookies.get('token');
+        console.log(token);
     
     try {
       const response = await axios.post('http://localhost:5000/api/appointments/availability', {
-        userId,
+        providerId: userId,
         date,
         timeSlots,
-      });
-      alert('Adding successful');
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`  // Add the token to the headers
+        }
+      }
+    );
+      alert('Availability added successfully');
       console.log(response.data);
     } catch (error) {
-      console.log(error);
-      console.error('Error adding:', error);
+      console.error('Error adding availability:', error);
       alert('Adding failed. Please try again.');
     }
-};
-
+  };
 
   return (
     <div className="mb-8 p-6 bg-white rounded-lg shadow-md">
@@ -57,12 +64,19 @@ const AddAvailability = ({ userId }) => {
         <div>
           <label className="block mb-2 text-gray-600">Time Slots:</label>
           {timeSlots.map((slot, index) => (
-            <div key={index} className="flex items-center mb-3">
+            <div key={index} className="flex space-x-2 mb-3">
               <input
                 type="time"
-                value={slot}
-                onChange={(e) => handleTimeSlotChange(index, e.target.value)}
-                className="border rounded px-3 py-2 w-full mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={slot.startTime}
+                onChange={(e) => handleTimeSlotChange(index, 'startTime', e.target.value)}
+                className="border rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+              <input
+                type="time"
+                value={slot.endTime}
+                onChange={(e) => handleTimeSlotChange(index, 'endTime', e.target.value)}
+                className="border rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
