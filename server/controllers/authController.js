@@ -57,8 +57,44 @@ const loginUser = async (req, res) => {
 
 
 // Get user profile
-const getUserProfile = (req, res) => {
-  res.json(req.user);
+const getUserProfile = async (req, res) => {
+  try {
+    const { userId } = req.query
+      // Assuming req.user contains the userId (from your auth middleware)
+      // const userId = req.body;
+  
+      // Fetch the user data from the database by userId
+      const user = await User.findById(userId).select('name email'); // Fetch only 'name' and 'email'
+  
+      // If no user is found, return an error
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Send the user profile data
+      res.status(200).json(user);
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      res.status(500).json({ message: 'Error fetching user profile' });
+    }
+};
+const getProviderProfile = async (req, res) => {
+  try {
+    // Fetch all users with the role "provider"
+    const providers = await User.find({ role: 'provider' }).select('name email'); // Fetch only 'name' and 'email'
+
+    // If no providers are found, return an appropriate message
+    if (!providers || providers.length === 0) {
+      return res.status(404).json({ message: 'No providers found' });
+    }
+
+    // Send the list of provider profiles
+    res.status(200).json(providers);
+  } catch (error) {
+    console.error('Error fetching provider profiles:', error);
+    res.status(500).json({ message: 'Error fetching provider profiles' });
+  }
 };
 
-module.exports = { registerUser, loginUser, getUserProfile };
+
+module.exports = { registerUser, loginUser, getUserProfile, getProviderProfile };
