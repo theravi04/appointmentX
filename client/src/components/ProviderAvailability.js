@@ -1,64 +1,62 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import { Calendar, Clock, X } from "lucide-react";
 
-import Cookies from 'js-cookie';
+const ProviderAvailability = ({ availability, deleteSlot }) => {
+  if (!availability || availability.length === 0) {
+    return (
+      <div className="p-6 bg-white rounded-lg shadow-md text-center">
+        <p className="text-lg text-gray-600">No availability found.</p>
+        <p className="mt-2 text-sm text-gray-500">Add some time slots to get started!</p>
+      </div>
+    );
+  }
 
-const ProviderAvailability = ({ userId }) => {
-  const [availability, setAvailability] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Group availability by date
+  const groupedAvailability = availability.reduce((acc, curr) => {
+    const date = new Date(curr.date).toLocaleDateString();
+    if (!acc[date]) {
+      acc[date] = [];
+    }
+    acc[date].push(curr);
+    return acc;
+  }, {});
 
-  useEffect(() => {
-    const fetchAvailability = async () => {
-        const token = Cookies.get('token');
-        console.log(token);
-      try {
-        // Make a GET request to fetch provider availability
-        const response = await axios.get('http://localhost:5000/api/appointments/providerAvailability', {
-            headers: {
-                Authorization: `Bearer ${token}`  // Add the token to the headers
-              },
-          params: { providerId: userId } // Pass providerId as a query parameter
-        });
-        console.log(response);
-        console.log(response.data);
-        
-        setAvailability(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching provider availability:", err);
-        setError("Failed to fetch availability data.");
-        setLoading(false);
-      }
-    };
-
-    fetchAvailability();
-  }, [userId]);
-
-  if (loading) return <div>Loading availability data...</div>;
-  if (error) return <div>{error}</div>;
+  const handleRemoveTimeSlot = (date, timeSlotId) => {
+    deleteSlot(date, timeSlotId)
+  };
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-700">Your Availability</h2>
-      {availability.length > 0 ? (
-        availability.map((avail, index) => (
-          <div key={index} className="mb-6">
-            <p className="text-lg mb-4">
-              <strong>Date:</strong> {new Date(avail.date).toLocaleDateString()} {/* Format the date */}
-            </p>
-            <ul className="space-y-2">
-              {avail.timeSlots.map((slot, slotIndex) => (
-                <li key={slotIndex} className="p-2 border-b border-gray-200">
-                  <strong>Start:</strong> {slot.startTime} | <strong>End:</strong> {slot.endTime}
-                </li>
-              ))}
-            </ul>
+      <h2 className="text-2xl font-semibold mb-6 text-gray-800 flex items-center">
+        <Calendar className="mr-2 text-blue-500" />
+        Your Availability
+      </h2>
+      {Object.entries(groupedAvailability).map(([date, slots]) => (
+        <div key={date} className="mb-6 bg-gray-50 p-4 rounded-lg">
+          <h3 className="text-lg font-medium mb-3 text-gray-700">{date}</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {slots.flatMap(slot => 
+              slot.timeSlots.map((timeSlot, index) => (
+                <div key={index} className="flex items-center justify-between bg-white p-3 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200">
+                  <div className="flex items-center">
+                    <Clock className="mr-2 text-green-500" size={18} />
+                    <span className="text-sm">
+                      {timeSlot.startTime} - {timeSlot.endTime}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => handleRemoveTimeSlot(slot.date, timeSlot._id)}
+                    className="text-red-500 hover:text-red-700 focus:outline-none"
+                    aria-label="Remove time slot"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+              ))
+            )}
           </div>
-        ))
-      ) : (
-        <p>No availability found.</p>
-      )}
+        </div>
+      ))}
     </div>
   );
 };

@@ -2,45 +2,44 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const AddAvailability = ({ userId }) => {
+const AddAvailability = ({ userId, onAvailabilityUpdate }) => {
   const [date, setDate] = useState('');
-  const [timeSlots, setTimeSlots] = useState([{ startTime: '', endTime: '' }]); // Array of objects to hold startTime and endTime
+  const [timeSlots, setTimeSlots] = useState([{ startTime: '', endTime: '' }]);
 
-  // Handle change for start and end times
   const handleTimeSlotChange = (index, field, value) => {
     const newTimeSlots = [...timeSlots];
     newTimeSlots[index][field] = value;
     setTimeSlots(newTimeSlots);
   };
 
-  // Add a new time slot (with startTime and endTime fields)
   const handleAddTimeSlot = () => {
     setTimeSlots([...timeSlots, { startTime: '', endTime: '' }]);
   };
 
-  // Submit the availability form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(userId);
-    console.log(date);
-    console.log(timeSlots);
     const token = Cookies.get('token');
-        console.log(token);
-    
+
     try {
-      const response = await axios.post('http://localhost:5000/api/appointments/availability', {
-        providerId: userId,
-        date,
-        timeSlots,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`  // Add the token to the headers
+      const response = await axios.post(
+        'http://localhost:5000/api/appointments/availability',
+        {
+          providerId: userId,
+          date,
+          timeSlots,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      }
-    );
-      alert('Availability added successfully');
-      console.log(response.data);
+      );
+      // log(response.message);
+      console.log(response);
+      console.log("message : ",response.data.message);
+      
+      alert(response.data.message);
+      onAvailabilityUpdate(); // Trigger the parent to fetch new availability
     } catch (error) {
       console.error('Error adding availability:', error);
       alert('Adding failed. Please try again.');

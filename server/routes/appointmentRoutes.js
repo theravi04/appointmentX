@@ -5,6 +5,9 @@ const {
     createAppointment,
     getProviderAppointments,
     getClientAppointments,
+    deleteAvailability,
+    deleteAppointmentByProvider,
+    deleteAppointmentByClient
 } = require('../controllers/appointmentController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
@@ -25,5 +28,11 @@ router.get('/provider', authMiddleware, getProviderAppointments);
 
 // Get appointments for a client
 router.get('/client', authMiddleware, getClientAppointments);
+
+router.delete('/deleteAvailability', authMiddleware, deleteAvailability);
+
+router.delete('/deleteAppointmentByProvider',authMiddleware, deleteAppointmentByProvider);
+
+router.delete('/deleteAppointmentByClient',authMiddleware, deleteAppointmentByClient);
 
 module.exports = router;
