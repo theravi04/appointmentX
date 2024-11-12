@@ -1,23 +1,71 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Calendar, Clock, User, Users, ClipboardList, Bell, Settings, History } from 'lucide-react';
 
 const Home = () => {
   return (
-    <div className="text-center mt-10">
-      <h1 className="text-2xl">Welcome to the Appointment System</h1>
-      <p className="mt-4">Book your appointment or add your availability.</p>
-      {/* <div className="mt-6">
-        <Link to="/book-appointment">
-          <button className="mr-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-            Book Appointment
-          </button>
-        </Link>
-        <Link to="/add-availability">
-          <button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-            Add Availability
-          </button>
-        </Link>
-      </div> */}
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-4">Welcome to AppointmentPro</h1>
+        <p className="text-lg text-gray-600">Streamlined scheduling for service providers and clients</p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Client Section */}
+        <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <div className="mb-4">
+            <h2 className="text-2xl font-semibold flex items-center gap-2">
+              <User className="h-6 w-6" />
+              Client Features
+            </h2>
+            <p className="text-gray-600 mt-1">Everything you need as a client</p>
+          </div>
+          <ul className="space-y-3">
+            <li className="flex items-center gap-2">
+              <Calendar className="h-4 w-4 text-blue-500" />
+              Browse available appointment slots
+            </li>
+            <li className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-blue-500" />
+              Schedule and reschedule appointments
+            </li>
+            <li className="flex items-center gap-2">
+              <History className="h-4 w-4 text-blue-500" />
+              View appointment history
+            </li>
+          </ul>
+        </div>
+
+        {/* Provider Section */}
+        <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <div className="mb-4">
+            <h2 className="text-2xl font-semibold flex items-center gap-2">
+              <Users className="h-6 w-6" />
+              Provider Features
+            </h2>
+            <p className="text-gray-600 mt-1">Tools to manage your services</p>
+          </div>
+          <ul className="space-y-3">
+            <li className="flex items-center gap-2">
+              <Calendar className="h-4 w-4 text-green-500" />
+              Set and update availability
+            </li>
+            <li className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-green-500" />
+              View upcoming appointments
+            </li>
+            <li className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-green-500" />
+              Manage client bookings
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="mt-8 text-center">
+        <p className="text-gray-500">
+          Create an account to get started with AppointmentPro
+        </p>
+      </div>
     </div>
   );
 };

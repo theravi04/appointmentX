@@ -44,7 +44,6 @@ const Provider = ({ userId }) => {
       <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
     </div>
   );
-
   // to delete a slot
   const deleteSlot = async (date, slotId) => {
     const token = Cookies.get('token');
