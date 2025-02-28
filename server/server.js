@@ -10,11 +10,14 @@ const app = express();
 dotenv.config();
 connectDB();
 
-app.use(cors());
+app.use(cors({
+    origin: "https://appointment-x-ten.vercel.app/",
+    credentials: true,
+}));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/appointments', appointmentRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
