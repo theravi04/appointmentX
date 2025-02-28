@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { X } from 'lucide-react';  // Import the X icon from lucide-react

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Calendar, Clock, Mail, User, FileText, X } from "lucide-react";
@@ -10,7 +10,7 @@ const ClientAppointment = ({ userId }) => {
 
   useEffect(() => {
     fetchAppointments();
-  }, [userId]);
+  }, [userId, fetchAppointments]);
 
   const fetchAppointments = async () => {
     const token = Cookies.get("token");

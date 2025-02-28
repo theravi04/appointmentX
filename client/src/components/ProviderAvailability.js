@@ -1,4 +1,3 @@
-import React from "react";
 import { Calendar, Clock, X } from "lucide-react";
 
 const ProviderAvailability = ({ availability, deleteSlot }) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import AddAvailability from './AddAvailability';
 import ViewAppointments from './ViewAppointments';
 import ProviderAvailability from './ProviderAvailability';
@@ -37,7 +37,8 @@ const Provider = ({ userId }) => {
 
   useEffect(() => {
     fetchAvailability();
-  }, [userId]);
+}, [userId, fetchAvailability]);
+
 
   if (loading) return (
     <div className="flex justify-center items-center h-screen">
