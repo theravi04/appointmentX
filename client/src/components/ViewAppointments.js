@@ -8,10 +8,6 @@ const ViewAppointments = ({ userId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchAppointments();
-  }, [userId, fetchAppointments]);
-
   const fetchAppointments = async () => {
     const token = Cookies.get("token");
     try {
@@ -50,6 +46,9 @@ const ViewAppointments = ({ userId }) => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    fetchAppointments();
+  }, [userId, fetchAppointments]);
 
   const handleRemoveAppointment = async (appointmentId) => {
     const token = Cookies.get("token");

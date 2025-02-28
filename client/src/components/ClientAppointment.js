@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Calendar, Clock, Mail, User, FileText, X } from "lucide-react";
@@ -8,17 +8,12 @@ const ClientAppointment = ({ userId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchAppointments();
-  }, [userId, fetchAppointments]);
-
   const fetchAppointments = async () => {
     const token = Cookies.get("token");
     try {
       setLoading(true);
       const response = await axios.get(
         "https://appointmentx.onrender.com/api/appointments/client",
-        // "http://localhost:5000/api/appointments/client",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -35,30 +30,26 @@ const ClientAppointment = ({ userId }) => {
     }
   };
 
+  useEffect(() => {
+    fetchAppointments();
+  }, [userId]); // Removed `fetchAppointments` from dependencies
+
   const deleteAppointment = async (appointmentId) => {
-    // Add logic to delete the appointment
-    console.log(appointmentId);
     const token = Cookies.get("token");
     try {
       await axios.delete(
-        `https://appointmentx.onrender.com/api/appointments/deleteAppointmentByClient`,
-        // `http://localhost:5000/api/appointments/deleteAppointmentByClient`,
+        "https://appointmentx.onrender.com/api/appointments/deleteAppointmentByClient",
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          data:{
-            appointmentId,
-          }
+          data: { appointmentId },
         }
       );
-      // Remove the appointment from the state
-      setAppointments(appointments.filter(app => app._id !== appointmentId));
+      setAppointments(appointments.filter((app) => app._id !== appointmentId));
     } catch (error) {
       console.error("Error removing appointment:", error);
-      // You might want to show an error message to the user here
     }
-    
   };
 
   if (loading) {
@@ -80,7 +71,7 @@ const ClientAppointment = ({ userId }) => {
               className="relative bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
             >
               <button
-                onClick={() => deleteAppointment(appointment._id)} // Hook up delete functionality
+                onClick={() => deleteAppointment(appointment._id)}
                 className="absolute top-2 right-2 text-red-500 hover:text-red-700 focus:outline-none"
                 aria-label="Remove appointment"
               >
