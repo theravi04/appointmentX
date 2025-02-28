@@ -9,7 +9,8 @@ const AvailabilityModal = ({ isOpen, onClose, availability, provider, clientId }
     const token = Cookies.get('token');
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/appointments/bookAppointment',
+        'https://appointmentx.onrender.com/api/appointments/bookAppointment',
+        // 'http://localhost:5000/api/appointments/bookAppointment',
         {
           providerId: provider,
           clientId,

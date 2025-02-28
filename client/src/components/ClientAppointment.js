@@ -17,7 +17,8 @@ const ClientAppointment = ({ userId }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/client",
+        "https://appointmentx.onrender.com/api/appointments/client",
+        // "http://localhost:5000/api/appointments/client",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -40,7 +41,8 @@ const ClientAppointment = ({ userId }) => {
     const token = Cookies.get("token");
     try {
       await axios.delete(
-        `http://localhost:5000/api/appointments/deleteAppointmentByClient`,
+        `https://appointmentx.onrender.com/api/appointments/deleteAppointmentByClient`,
+        // `http://localhost:5000/api/appointments/deleteAppointmentByClient`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

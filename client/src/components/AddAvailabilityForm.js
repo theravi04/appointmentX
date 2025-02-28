@@ -16,7 +16,8 @@ const Provider = ({ userId }) => {
     const token = Cookies.get('token');
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/appointments/providerAvailability', {
+      const response = await axios.get('https://appointmentx.onrender.com/api/appointments/providerAvailability', {
+      // const response = await axios.get('http://localhost:5000/api/appointments/providerAvailability', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -51,7 +52,8 @@ const Provider = ({ userId }) => {
     console.log(date, slotId);
     console.log(userId);
     try {
-      await axios.delete(`http://localhost:5000/api/appointments/deleteAvailability`, {
+      await axios.delete(`https://appointmentx.onrender.com/api/appointments/deleteAvailability`, {
+      // await axios.delete(`http://localhost:5000/api/appointments/deleteAvailability`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

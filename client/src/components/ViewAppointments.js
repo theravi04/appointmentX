@@ -17,7 +17,8 @@ const ViewAppointments = ({ userId }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/provider",
+        "https://appointmentx.onrender.com/api/appointments/provider",
+        // "http://localhost:5000/api/appointments/provider",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -28,7 +29,8 @@ const ViewAppointments = ({ userId }) => {
 
       const enrichedAppointments = await Promise.all(response.data.map(async (appointment) => {
         const clientResponse = await axios.get(
-          `http://localhost:5000/api/auth/profile`,
+          `https://appointmentx.onrender.com/api/auth/profile`,
+          // `http://localhost:5000/api/auth/profile`,
           {
             params: { userId: appointment.clientId },
           }
@@ -55,7 +57,8 @@ const ViewAppointments = ({ userId }) => {
     
     try {
       await axios.delete(
-        `http://localhost:5000/api/appointments/deleteAppointmentByProvider`,
+        `https://appointmentx.onrender.com/api/appointments/deleteAppointmentByProvider`,
+        // `http://localhost:5000/api/appointments/deleteAppointmentByProvider`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

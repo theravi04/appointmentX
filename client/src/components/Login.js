@@ -11,7 +11,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const response = await axios.post('https://appointmentx.onrender.com/api/auth/login', { email, password });
+      // const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
       console.log("check in login",response.data); // Log response to see if the token is there
 
     if (response.data.token) {

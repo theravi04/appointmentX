@@ -18,7 +18,8 @@ const BookAppointmentForm = ({ userId }) => {
       const token = Cookies.get('token');
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:5000/api/auth/providerProfile', {
+        const response = await axios.get('https://appointmentx.onrender.com/api/auth/providerProfile', {
+        // const response = await axios.get('http://localhost:5000/api/auth/providerProfile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,7 +39,8 @@ const BookAppointmentForm = ({ userId }) => {
   const viewAvailabilities = async (providerId) => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:5000/api/appointments/providerAvailability', {
+      const response = await axios.get('https://appointmentx.onrender.com/api/appointments/providerAvailability', {
+      // const response = await axios.get('http://localhost:5000/api/appointments/providerAvailability', {
         params: { providerId },
       });
       setAvailability(response.data);

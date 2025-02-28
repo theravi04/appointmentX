@@ -22,7 +22,8 @@ const AddAvailability = ({ userId, onAvailabilityUpdate }) => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/appointments/availability',
+        'https://appointmentx.onrender.com/api/appointments/availability',
+        // 'http://localhost:5000/api/appointments/availability',
         {
           providerId: userId,
           date,
