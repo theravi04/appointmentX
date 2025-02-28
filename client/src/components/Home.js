@@ -1,11 +1,10 @@
-import React from 'react';
-import { Calendar, Clock, User, Users, ClipboardList, Bell, Settings, History } from 'lucide-react';
+import { Calendar, Clock, User, Users, History } from 'lucide-react';
 
 const Home = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Welcome to AppointmentPro</h1>
+        <h1 className="text-4xl font-bold mb-4">Welcome to AppointmentX</h1>
         <p className="text-lg text-gray-600">Streamlined scheduling for service providers and clients</p>
       </div>
 
@@ -63,7 +62,7 @@ const Home = () => {
 
       <div className="mt-8 text-center">
         <p className="text-gray-500">
-          Create an account to get started with AppointmentPro
+          Create an account to get started with AppointmentX
         </p>
       </div>
     </div>
