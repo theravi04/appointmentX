@@ -11,7 +11,7 @@ dotenv.config();
 connectDB();
 
 app.use(cors({
-    origin: "https://appointment-x-ten.vercel.app/",
+    origin: "https://appointment-x-ten.vercel.app",
     credentials: true,
 }));
 app.use(express.json());
